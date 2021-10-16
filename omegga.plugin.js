@@ -16,6 +16,7 @@ module.exports = class FancyChat {
             'chat-range': chatrange,
             'enable-chat-range': chatrangeEnabled,
             'stop-sending-exclamation': stopSendingExclamation,
+            'enable-nicknames': nicknamesEnabled,
           } = this.config;
 
             Omegga.on("chat", async (user, message) => {
@@ -24,8 +25,7 @@ module.exports = class FancyChat {
               let senderpos = await sender.getPosition();
 
               let sentMessage = message;
-
-                            sentMessage = sentMessage
+              sentMessage = sentMessage
                             .replaceAll("&1","<color=\""+"f00"+"\">")
                             .replaceAll("&2","<color=\""+"f80"+"\">")
                             .replaceAll("&3","<color=\""+"ff0"+"\">")
@@ -35,7 +35,11 @@ module.exports = class FancyChat {
                             .replaceAll("&7","<color=\""+"f0f"+"\">")
                             .replaceAll("&8","<color=\""+"fff"+"\">")
                             .replaceAll("&9","<color=\""+"aaa"+"\">")
-                            .replaceAll("&0","<color=\""+"000"+"\">")
+                            .replaceAll("&0","<color=\""+"000"+"\">");
+
+              let name = await this.store.get("fc."+user+".nickname") || user;
+
+
 
               if(sentMessage.startsWith("!") && stopSendingExclamation){
               }else{
@@ -47,7 +51,7 @@ module.exports = class FancyChat {
                     let player = Omegga.getPlayer(item.name);
                     if(players[i].name != user){
                       if(!chatrangeEnabled || (dist(player.getPosition(),senderpos) <= chatrange)){
-                          Omegga.whisper(players[i],"<b><color=\""+color+"\">"+user+":</> "+ sentMessage);
+                          Omegga.whisper(players[i],"<b><color=\""+color+"\">"+name+":</> "+ sentMessage);
                       }
                     }
                 });
@@ -58,13 +62,32 @@ module.exports = class FancyChat {
                         let sender = Omegga.getPlayer(name);
                         try{
                         this.store.set("fc."+name+".namecolor",args[0]);
-                          Omegga.whisper(sender,"<b><color=\""+args[0]+"\"> Changed name name color to \""+args[0]+"\".</b>");
+                          Omegga.whisper(sender,"<b><color=\""+args[0]+"\"> Changed name color to \""+args[0]+"\".</b>");
                       }catch(e){
                         Omegga.whisper(sender,"Failed to set name color to "+args[0]+": "+e);
                       }
+    });
 
+                                              Omegga.on('chatcmd:nickname', (name, ...args) => {
+                                              let sender = Omegga.getPlayer(name);
+                                              if(nicknamesEnabled){
+                                              try{
+                                                if(args[0]){
+                                              this.store.set("fc."+name+".nickname",args[0]);
+                                                  Omegga.whisper(sender,"<b><color=\""+"FAB"+"\"> Changed nickname to \""+args[0]+"\".</b>");
+                                            }else{
+                                              this.store.delete("fc."+name+".nickname");
+                                                  Omegga.whisper(sender,"<b><color=\""+"FAB"+"\"> Set your nickname back to default.</b>");
+
+                                            }
+                                            }catch(e){
+                                              Omegga.whisper(sender,"Failed to set name color to "+args[0]+": "+e);
+                                            }
+                                          }else{
+                                              Omegga.whisper(sender,"Nicknames are not enabled on this server.");
+                                          }
                         });
-            Omegga.on('chatcmd:me', (name, ...args) => {
+            Omegga.on('chatcmd:me', async (name, ...args) => {
               let players = Omegga.getPlayers();
               let sentMessage = args.join(' ');
 
@@ -81,8 +104,9 @@ module.exports = class FancyChat {
               .replaceAll("&9","<color=\""+"aaa"+"\">")
               .replaceAll("&0","<color=\""+"000"+"\">")
 
+                            let nickname = await this.store.get("fc."+name+".nickname") || name;
               for(let i = 0; i < players.length; i++){
-                Omegga.whisper(players[i],"<b><color=\"b5a\">"+name+" "+sentMessage+"</>");
+                Omegga.whisper(players[i],"<b><color=\"b5a\">"+nickname+" "+sentMessage+"</>");
               }
 
             });

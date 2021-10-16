@@ -1,7 +1,7 @@
 {
     "name": "FancyChat",
     "author": "Zombie_Striker",
-    "description": "Allows for fancy chat",
+    "description": "Allows for fancy chat.",
     "config": {
         "chat-range": {
             "description": "TODO: Add ability to limit chat range",
@@ -12,6 +12,11 @@
             "description": "TODO: Add ability to limit chat range",
             "type": "boolean",
             "default": false
+        },
+        "enable-nicknames": {
+            "description": "Adds the ability for players to nickname themselves",
+            "type": "boolean",
+            "default": true
         },
         "stop-sending-exclamation": {
             "description": "Determines whether sending the ! for commands will be shown to all players.",
@@ -33,10 +38,16 @@
             "args": []
         },
         {
+            "name": "!nickname",
+            "description": "Changes the player's nickname",
+            "example": "!nickname coolnickname",
+            "args": []
+        },
+        {
               "name": "!msg",
               "description": "Lets the player write messages to another player",
               "example": "!msg Zombie_Striker hi",
               "args": []
-        }
+          }
     ]
 }
