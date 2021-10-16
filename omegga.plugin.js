@@ -43,7 +43,7 @@ module.exports = class FancyChat {
 
               if(sentMessage.startsWith("!") && stopSendingExclamation){
               }else{
-                let color = this.store.get("fc."+user+".namecolor");
+                let color = await this.store.get("fc."+user+".namecolor");
                 if(color == null){
                   color = "929";
                 }
