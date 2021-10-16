@@ -1,0 +1,42 @@
+{
+    "name": "FancyChat",
+    "author": "Zombie_Striker",
+    "description": "Allows for fancy chat",
+    "config": {
+        "chat-range": {
+            "description": "TODO: Add ability to limit chat range",
+            "type": "number",
+            "default": 500
+        },
+        "enable-chat-range": {
+            "description": "TODO: Add ability to limit chat range",
+            "type": "boolean",
+            "default": false
+        },
+        "stop-sending-exclamation": {
+            "description": "Determines whether sending the ! for commands will be shown to all players.",
+            "type": "boolean",
+            "default": true
+        }
+    },
+    "commands": [
+        {
+            "name": "!me",
+            "description": "Lets the player write emotes",
+            "example": "!me",
+            "args": []
+        },
+        {
+            "name": "!namecolor",
+            "description": "Changes the player's name color",
+            "example": "!namecolor ffaabb",
+            "args": []
+        },
+        {
+              "name": "!msg",
+              "description": "Lets the player write messages to another player",
+              "example": "!msg Zombie_Striker hi",
+              "args": []
+        }
+    ]
+}
