@@ -4,7 +4,7 @@ Customize chat. Allow players
 
 ## Installation
 
-`omegga install gh:ZombieStriker/FancyChat`
+`omegga install gh:ZombieStriker/fancychat`
 
 ## Usage
 
