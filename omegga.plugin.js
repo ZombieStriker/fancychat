@@ -25,6 +25,7 @@ module.exports = class FancyChat {
               let senderpos = await sender.getPosition();
 
               let sentMessage = message;
+              try{
               sentMessage = sentMessage
                             .replaceAll("&1","<color=\""+"f00"+"\">")
                             .replaceAll("&2","<color=\""+"f80"+"\">")
@@ -36,6 +37,7 @@ module.exports = class FancyChat {
                             .replaceAll("&8","<color=\""+"fff"+"\">")
                             .replaceAll("&9","<color=\""+"aaa"+"\">")
                             .replaceAll("&0","<color=\""+"000"+"\">");
+                          }catch(e){}
 
               let name = await this.store.get("fc."+user+".nickname") || user;
 
@@ -92,6 +94,7 @@ module.exports = class FancyChat {
               let sentMessage = args.join(' ');
 
 
+              try{
               sentMessage = sentMessage
               .replaceAll("&1","<color=\""+"f00"+"\">")
               .replaceAll("&2","<color=\""+"f80"+"\">")
@@ -102,7 +105,8 @@ module.exports = class FancyChat {
               .replaceAll("&7","<color=\""+"f0f"+"\">")
               .replaceAll("&8","<color=\""+"fff"+"\">")
               .replaceAll("&9","<color=\""+"aaa"+"\">")
-              .replaceAll("&0","<color=\""+"000"+"\">")
+              .replaceAll("&0","<color=\""+"000"+"\">");
+            }catch(e){}
 
                             let nickname = await this.store.get("fc."+name+".nickname") || name;
               for(let i = 0; i < players.length; i++){
